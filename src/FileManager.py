@@ -53,8 +53,8 @@ class FileManager:
             <title>ChoboMemo</title>
             <style>
             td {
-                text-align:center
-            }
+                text-align:left;
+                vertical-align: text-top;
             
             h10 {
                 color:white;
@@ -90,7 +90,9 @@ class FileManager:
                 if idx % 4 == 1:
                     f.write("<tr>\n")
                 bgcolor = ""
-                postData = ("<br>").join(memo.split("\n"))
+                postNoSpaceData = ("&nbsp;").join(memo.split(" "))
+                postData = ("<br>").join(postNoSpaceData.split("\n"))
+   
                 if colorTable[idx-1] == 1:
                     bgcolor = "bgcolor=#e6f2ff"
                 tmpHtml = "<td {0}>&nbsp;{1}&nbsp;</td>\n".format(bgcolor, postData)
