@@ -31,13 +31,14 @@ class FileManager:
         print("onSaveData ")
         if len(self.fileName) < 3:
            print ("Wrong save file name")
-           return
+           return False
 
         f = open(self.fileName,'w')
         for memo in memoData:
             tmpMemo = memo + "o(._.)p"
             f.write(tmpMemo)
         f.close()
+        return True
 
     def onSave(self, filename_, memoData):
         print("onSave " + filename_)

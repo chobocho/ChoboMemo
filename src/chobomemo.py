@@ -5,10 +5,10 @@ import CommandInterpreter
 
 '''
 Start  : 2018.06.12
-Update : 2018.06.12
+Update : 2018.06.13
 '''
 
-SW_TITLE = "ChoboMemo V0627.0612a"
+SW_TITLE = "ChoboMemo V0627.0613a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, *args, **kw):
@@ -66,7 +66,11 @@ class ChoboMemoFrame(wx.Frame):
     def onCloseApp(self, event):
         if event.CanVeto() and self.memoPanel.needSave():
             try:
-               self.memoPanel.onSaveData()
+               dlg = wx.MessageDialog(self, 'Do you want to save before quit?',
+                        'ChoboMemo', wx.YES_NO | wx.ICON_QUESTION)
+               if dlg.ShowModal() == wx.ID_YES:
+                   self.memoPanel.onSaveData()
+               dlg.Destroy()
             except:
                dlg = wx.MessageDialog(self, 'Exception happened during closing ChoboMemo!',
                         'ChoboMemo', wx.OK | wx.ICON_INFORMATION)
@@ -77,7 +81,7 @@ class ChoboMemoFrame(wx.Frame):
 
 def main(): 
     app = wx.App()
-    frm = ChoboMemoFrame(None, title=SW_TITLE, size=(900, 900))
+    frm = ChoboMemoFrame(None, title=SW_TITLE, size=(700, 770))
     frm.Show()
     app.MainLoop()
 
