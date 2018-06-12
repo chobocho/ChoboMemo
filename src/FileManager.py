@@ -50,7 +50,7 @@ class FileManager:
             htmlHead='''
             <html>
             <head>
-            <title>ChoboFileManager2 URL list</title>
+            <title>ChoboMemo</title>
             <style>
             td {
                 text-align:center
@@ -81,14 +81,20 @@ class FileManager:
             f = open(filePath,'w')
             f.write(htmlHead)
             idx = 1
+            colorTable = [ 0, 1, 0, 1, 
+                           1, 0, 1, 0,
+                           0, 1, 0, 1,
+                           1, 0, 1, 0]
+
             for memo in memoData:
                 if idx % 4 == 1:
                     f.write("<tr>\n")
                 bgcolor = ""
-                if idx % 2 == 0:
+                postData = ("<br>").join(memo.split("\n"))
+                if colorTable[idx-1] == 1:
                     bgcolor = "bgcolor=#e6f2ff"
-                tmpHtml = "<td {0}>&nbsp;{1}&nbsp;</td>\n".format(bgcolor, memo)
-                print(tmpHtml)
+                tmpHtml = "<td {0}>&nbsp;{1}&nbsp;</td>\n".format(bgcolor, postData)
+                #print(tmpHtml)
                 f.write(tmpHtml)
                 if idx % 4 == 0:
                     f.write("</tr>\n")

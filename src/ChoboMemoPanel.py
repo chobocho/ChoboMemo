@@ -262,3 +262,13 @@ class ChoboMemoPanel(wx.Panel):
         self.memoCtrlList.append(self.memoText14)
         self.memoCtrlList.append(self.memoText15)
         self.memoCtrlList.append(self.memoText16)
+        ##
+        colorTable = [ 0, 1, 0, 1, 
+                       1, 0, 1, 0,
+                       0, 1, 0, 1,
+                       1, 0, 1, 0]
+        idx = 0;
+        for memo in self.memoCtrlList:
+            if colorTable[idx] == 1:
+                memo.SetBackgroundColour((240, 240, 240))
+            idx += 1
