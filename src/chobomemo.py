@@ -5,10 +5,10 @@ import CommandInterpreter
 
 '''
 Start  : 2018.06.12
-Update : 2018.06.13
+Update : 2018.06.14
 '''
 
-SW_TITLE = "ChoboMemo V0627.0613a1"
+SW_TITLE = "ChoboMemo V0627.0614a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, *args, **kw):

@@ -1,24 +1,45 @@
 import os
 import wx
+import json
 
 class FileManager:
     def __init__(self):
         self.fileName = ""
+        self.memo = []
+
+    def onLoadJson(self):
+       print ("onLoadJson")
+       try:
+           with open(self.fileName) as f:
+               jsonData = json.load(f)
+           print(jsonData['version'])
+           self.memo = jsonData['memo'][:]
+           #print(self.memo)
+       except:
+           print ("onLoadJson: Fail")
+           return False
+
+       return True
 
     def onLoad(self, filename_):
-        print("Load" + filename_)
+        print("Load " + filename_)
+        if (os.path.isfile(filename_)) == False:
+            return []
+
         self.fileName = filename_
 
+        if self.onLoadJson() == True:
+            return self.memo
+
+        # For old format
         try:
-            if (os.path.isfile(self.fileName)):
-                f = open(self.fileName,'r')
-                tmpMemo = f.read()
-                memo = tmpMemo.strip().split("o(._.)p")
-                print(memo)
-                f.close()
-                return memo
-            else:
-                return []
+            print ("onLoad...")
+            f = open(self.fileName,'r')
+            tmpMemo = f.read()
+            memo = tmpMemo.strip().split("o(._.)p")
+            print(memo)
+            f.close()
+            return memo
         except:
             dlg = wx.MessageDialog(None, 'Exception happened during closing ChoboMemo!',
                      'ChoboMemo', wx.OK | wx.ICON_INFORMATION)
@@ -27,17 +48,26 @@ class FileManager:
         
         return []
 
+    def onSaveAsJson(self, memoData):
+        print("onSaveAsJson ")
+        jsonData = {}
+        jsonData['version'] = "V0627.1001"
+        jsonData['memo'] = []
+
+        for memo in memoData:
+            jsonData['memo'].append(memo)
+
+        f = open(self.fileName,'w')
+        f.write(json.dumps(jsonData))
+        f.close()
+
     def onSaveData(self, memoData):
         print("onSaveData ")
         if len(self.fileName) < 3:
            print ("Wrong save file name")
            return False
 
-        f = open(self.fileName,'w')
-        for memo in memoData:
-            tmpMemo = memo + "o(._.)p"
-            f.write(tmpMemo)
-        f.close()
+        self.onSaveAsJson(memoData)
         return True
 
     def onSave(self, filename_, memoData):
