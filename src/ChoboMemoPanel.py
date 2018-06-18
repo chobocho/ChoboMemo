@@ -10,6 +10,16 @@ class ChoboMemoPanel(wx.Panel):
         self.memoCtrlList = []
         self.drawUI()
 
+    def onLoadMemoFromFile(self, fileName):
+        print ("onLoadMemoWithFile")
+        memoData = self.fileManger.onLoad(fileName)
+        print(memoData)
+        i = 0
+        for memo in self.memoCtrlList:
+            memo.SetValue(memoData[i])
+            i += 1
+        self.frame.SetTitle("# " + fileName)
+
     def onLoadMemo(self, evt):
         print ("onLoadMemo")
         path = ""
@@ -28,13 +38,7 @@ class ChoboMemoPanel(wx.Panel):
             path = dlg.GetPath()
         dlg.Destroy()
         if len(path) > 0:
-            memoData = self.fileManger.onLoad(path)
-            print(memoData)
-            i = 0
-            for memo in self.memoCtrlList:
-                memo.SetValue(memoData[i])
-                i += 1
-            self.frame.SetTitle("# " + path)
+            onLoadMemoFromFile(path)
 
     def onSaveData(self):
         print ("onSaveData")

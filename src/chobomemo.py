@@ -1,6 +1,7 @@
 import wx
 import ChoboMemoPanel
 import CommandInterpreter
+import sys
 
 
 '''
@@ -8,10 +9,10 @@ Start  : 2018.06.12
 Update : 2018.06.14
 '''
 
-SW_TITLE = "ChoboMemo V0627.0614a"
+SW_TITLE = "ChoboMemo V0627.0619a"
 
 class ChoboMemoFrame(wx.Frame):
-    def __init__(self, *args, **kw):
+    def __init__(self, filename_, *args, **kw):
         super(ChoboMemoFrame, self).__init__(*args, **kw)
         self.Bind(wx.EVT_CLOSE, self.onCloseApp)
 
@@ -36,6 +37,9 @@ class ChoboMemoFrame(wx.Frame):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.memoPanel, 1, wx.EXPAND)
         self.SetSizer(sizer)
+
+        if len(filename_) > 0:
+            self.memoPanel.onLoadMemoFromFile(filename_)
 
     def onSave(self, event):
         print ("onSave")
@@ -79,11 +83,15 @@ class ChoboMemoFrame(wx.Frame):
         self.Destroy()
 
 
-def main(): 
+def main(fileName = ""):
     app = wx.App()
-    frm = ChoboMemoFrame(None, title=SW_TITLE, size=(700, 770))
+    frm = ChoboMemoFrame(fileName, None, title=SW_TITLE, size=(700, 770))
     frm.Show()
     app.MainLoop()
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1 and sys.argv[1][-3:].lower() == '.cm':
+        print(sys.argv[1])
+        main(sys.argv[1])
+    else :
+        main()

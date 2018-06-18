@@ -8,5 +8,9 @@ class TestStringMethods(unittest.TestCase):
         postData = ("<br>").join(preData.split("\n"))
         print (postData)
 
+    def test_checkFilename(self):
+        file = "test.cm"
+        self.assertTrue((file[-3:]) == ".cm")
+
 if __name__ == '__main__':
     unittest.main()
