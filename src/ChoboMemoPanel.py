@@ -38,7 +38,7 @@ class ChoboMemoPanel(wx.Panel):
             path = dlg.GetPath()
         dlg.Destroy()
         if len(path) > 0:
-            onLoadMemoFromFile(path)
+            self.onLoadMemoFromFile(path)
 
     def onSaveData(self):
         print ("onSaveData")
