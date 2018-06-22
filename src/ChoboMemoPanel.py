@@ -1,11 +1,13 @@
 import wx
 import os
 import FileManager
+import choboutil
 
 class ChoboMemoPanel(wx.Panel):
     def __init__(self, *args, **kw):
         super(ChoboMemoPanel, self).__init__(*args, **kw)
         self.frame = args[0]
+        self.hash = "0000000000000000"
         self.fileManger = FileManager.FileManager()
         self.memoCtrlList = []
         self.drawUI()
@@ -19,6 +21,7 @@ class ChoboMemoPanel(wx.Panel):
             memo.SetValue(memoData[i])
             i += 1
         self.frame.SetTitle("# " + fileName)
+        self.hash = self.getMemoHash()
 
     def onLoadMemo(self, evt):
         print ("onLoadMemo")
@@ -47,6 +50,7 @@ class ChoboMemoPanel(wx.Panel):
             memoData.append(memo.GetValue())
         if self.fileManger.onSaveData(memoData) == False:
             self.onSaveNewMemo()
+        self.hash = self.getMemoHash()
 
     def onSave(self, evt):
         print ("onSave")
@@ -87,25 +91,29 @@ class ChoboMemoPanel(wx.Panel):
 
     def onExportMemo(self, evt):
         print ("onExportMemo")
-        htmlFilePath = ""
+        exportFilePath = ""
         dlg = wx.FileDialog(
             self, message="Save file as ...", defaultDir=os.getcwd(),
-            defaultFile="", wildcard="Html file (*.html)|*.htm", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+            defaultFile="", wildcard="Txt files (*.txt)|*.txt|Html file (*.htm)|*.htm", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
             )
         dlg.SetFilterIndex(2)
 
         if dlg.ShowModal() == wx.ID_OK:
-            htmlFilePath = dlg.GetPath()
+            exportFilePath = dlg.GetPath()
         dlg.Destroy()
 
-        if len(htmlFilePath) > 0:
+        if len(exportFilePath) > 0:
+            print ("onExportMemo : " + exportFilePath)
             memoData = []
             for memo in self.memoCtrlList:
                 tmpData = memo.GetValue()
                 if len(tmpData) == 0:
                     tmpData = ""
                 memoData.append(tmpData)
-            self.fileManger.exportToHtml(htmlFilePath, memoData)
+            if (exportFilePath[-4:].lower() == ".htm"):
+                self.fileManger.exportToHtml(exportFilePath, memoData)
+            else:
+                self.fileManger.exportToTxt(exportFilePath, memoData)
 
     def onRunCmd(self, evt):
         tmpCmd = self.cmdText.GetValue().strip()
@@ -124,14 +132,16 @@ class ChoboMemoPanel(wx.Panel):
         elif UrlManager.UrlManager.isURL(tmpCmd):
             self.urlManger.openURL(tmpCmd)
 
-    def needSave(self):
+    def getMemoHash(self):
+        hash = ""
         for memo in self.memoCtrlList:
             tmpData = memo.GetValue()
-            if len(tmpData) > 0:
-                return True
-        return False
+            hash = hash + str(choboutil.hash(tmpData))
+        print ("getMemoHash : " + hash)
+        return hash
 
-
+    def needSave(self):
+        return self.hash != self.getMemoHash()
 
     def drawUI(self):
         print ("ChoboMemoPanel::drawUI")
@@ -232,7 +242,7 @@ class ChoboMemoPanel(wx.Panel):
         self.SaveBtn.Bind(wx.EVT_BUTTON, self.onSave)
         memoMngBtnBox.Add(self.SaveBtn, 1, wx.EXPAND)
 
-        self.SaveAsBtn = wx.Button(self, 10, "SaveAs", size=(30,30))
+        self.SaveAsBtn = wx.Button(self, 10, "Save As", size=(30,30))
         self.SaveAsBtn.Bind(wx.EVT_BUTTON, self.onSaveMemo)
         memoMngBtnBox.Add(self.SaveAsBtn, 1, wx.EXPAND)
 

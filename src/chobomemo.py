@@ -9,7 +9,7 @@ Start  : 2018.06.12
 Update : 2018.06.19
 '''
 
-SW_TITLE = "ChoboMemo V0627.0620a"
+SW_TITLE = "ChoboMemo V0627.0623a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
