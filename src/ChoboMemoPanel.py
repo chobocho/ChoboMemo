@@ -63,7 +63,6 @@ class ChoboMemoPanel(wx.Panel):
             self, message="Save file as ...", defaultDir=os.getcwd(),
             defaultFile="", wildcard="*.cm", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
             )
-        dlg.SetFilterIndex(2)
 
         if dlg.ShowModal() == wx.ID_OK:
             saveFilePath = dlg.GetPath()
