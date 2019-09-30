@@ -16,13 +16,13 @@ class ChoboMemoFrame(wx.Frame):
         super(ChoboMemoFrame, self).__init__(*args, **kw)
         self.Bind(wx.EVT_CLOSE, self.onCloseApp)
 
-        ctrl_S_Id = wx.NewId()
+        ctrl_S_Id = wx.ID_ANY
         self.Bind(wx.EVT_MENU, self.onSave, id=ctrl_S_Id)
-        ctrl_P_Id = wx.NewId()
+        ctrl_P_Id = wx.ID_ANY
         self.Bind(wx.EVT_MENU, self.onRunPaint, id=ctrl_P_Id)
-        ctrl_R_Id = wx.NewId()
+        ctrl_R_Id = wx.ID_ANY
         self.Bind(wx.EVT_MENU, self.onRun, id=ctrl_R_Id)
-        ctrl_Q_Id = wx.NewId()
+        ctrl_Q_Id = wx.ID_ANY
         self.Bind(wx.EVT_MENU, self.onClose, id=ctrl_Q_Id)
 
 
