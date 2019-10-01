@@ -145,22 +145,24 @@ class ChoboMemoPanel(wx.Panel):
         print ("ChoboMemoPanel::drawUI")
         sizer = wx.BoxSizer(wx.VERTICAL)
 
+        BOX_SIZE = 120
+
         ##
         memoMngBox1 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.memoText1 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText1 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText1.SetValue("")
         memoMngBox1.Add(self.memoText1, 1, wx.EXPAND)
 
-        self.memoText2 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText2 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText2.SetValue("")
         memoMngBox1.Add(self.memoText2, 1, wx.EXPAND)
 
-        self.memoText3 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText3 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText3.SetValue("")
         memoMngBox1.Add(self.memoText3, 1, wx.EXPAND)
 
-        self.memoText4 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText4 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText4.SetValue("")
         memoMngBox1.Add(self.memoText4, 1, wx.EXPAND)
 
@@ -169,19 +171,19 @@ class ChoboMemoPanel(wx.Panel):
         ##
         memoMngBox2 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.memoText5 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText5 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText5.SetValue("")
         memoMngBox2.Add(self.memoText5, 1, wx.EXPAND)
 
-        self.memoText6 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText6 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText6.SetValue("")
         memoMngBox2.Add(self.memoText6, 1, wx.EXPAND)
 
-        self.memoText7 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText7 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText7.SetValue("")
         memoMngBox2.Add(self.memoText7, 1, wx.EXPAND)
 
-        self.memoText8 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText8 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText8.SetValue("")
         memoMngBox2.Add(self.memoText8, 1, wx.EXPAND)
 
@@ -190,19 +192,19 @@ class ChoboMemoPanel(wx.Panel):
         ##
         memoMngBox3 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.memoText9 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText9 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText9.SetValue("")
         memoMngBox3.Add(self.memoText9, 1, wx.EXPAND)
 
-        self.memoText10 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText10 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText10.SetValue("")
         memoMngBox3.Add(self.memoText10, 1, wx.EXPAND)
 
-        self.memoText11 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText11 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText11.SetValue("")
         memoMngBox3.Add(self.memoText11, 1, wx.EXPAND)
 
-        self.memoText12 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText12 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText12.SetValue("")
         memoMngBox3.Add(self.memoText12, 1, wx.EXPAND)
 
@@ -211,19 +213,19 @@ class ChoboMemoPanel(wx.Panel):
         ##
         memoMngBox4 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.memoText13 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText13 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText13.SetValue("")
         memoMngBox4.Add(self.memoText13, 1, wx.EXPAND)
 
-        self.memoText14 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText14 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText14.SetValue("")
         memoMngBox4.Add(self.memoText14, 1, wx.EXPAND)
 
-        self.memoText15 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText15 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText15.SetValue("")
         memoMngBox4.Add(self.memoText15, 1, wx.EXPAND)
 
-        self.memoText16 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,150))
+        self.memoText16 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
         self.memoText16.SetValue("")
         memoMngBox4.Add(self.memoText16, 1, wx.EXPAND)
 

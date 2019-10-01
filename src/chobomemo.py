@@ -6,10 +6,10 @@ import sys
 
 '''
 Start  : 2018.06.12
-Update : 2018.06.19
+Update : 2019.10.02
 '''
 
-SW_TITLE = "ChoboMemo V0627.0623a"
+SW_TITLE = "ChoboMemo V1105.SJ02a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
@@ -85,7 +85,7 @@ class ChoboMemoFrame(wx.Frame):
 
 def main(fileName = ""):
     app = wx.App()
-    frm = ChoboMemoFrame(fileName, None, title=SW_TITLE, size=(700, 770))
+    frm = ChoboMemoFrame(fileName, None, title=SW_TITLE, size=(700, 570))
     frm.Show()
     app.MainLoop()
 
