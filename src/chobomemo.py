@@ -2,7 +2,7 @@ import wx
 import ChoboMemoPanel
 import CommandInterpreter
 import sys
-
+from filedrop import *
 
 '''
 Start  : 2018.06.12
@@ -41,6 +41,21 @@ class ChoboMemoFrame(wx.Frame):
         if len(filename_) > 0:
             self.memoPanel.onLoadMemoFromFile(filename_)
 
+        filedrop = FileDrop(self)
+        self.SetDropTarget(filedrop)
+
+    def OnCallback(self, filelist):
+        loadFile = filelist[0]
+        if self._isCMFile(loadFile):
+            self.memoPanel.onLoadMemoFromFile(loadFile)
+
+    def _isCMFile(self, filename_):
+        if len(filename_) <= 0:
+            return False
+        if '.cm' in filename_.lower():
+            return True
+        return False           
+        
     def onSave(self, event):
         print ("onSave")
         self.memoPanel.onSaveData()
