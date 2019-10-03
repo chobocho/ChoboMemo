@@ -1,6 +1,7 @@
 import os
 import wx
 import json
+import traceback
 
 class FileManager:
     def __init__(self):
@@ -82,58 +83,126 @@ class FileManager:
             <head>
             <title>ChoboMemo</title>
             <style>
-            td {
-                text-align:left;
-                vertical-align: text-top;
-            
-            h10 {
-                color:white;
-            }
-            
-            a:link {
-                text-decoration: none;
-            }
-            
-            a:link, a:visited {
-                color: blue;
-            }
+                h10 {
+                  color: white;
+                }
+	            
+                a:link {
+                  text-decoration: none;
+                }
+	            
+                a:link,
+                a:visited {
+                  color: blue;
+                }
+	            
+                .jb_table {
+                  display: table;
+                  margin-left: auto;
+                  margin-right: auto;
+                }
+	            
+                .row {
+                  border-radius: 10px;
+                  margin: 2px auto;
+                  display: table-row;
+                }
+	            
+                .cell {
+                  text-align: left;
+                  border-radius: 10px;
+                  margin: 2px auto;
+                  display: table-cell;
+                  border: 1px solid blue;
+                  vertical-align: top;
+                }
+	            
+                .circle_rectangle {
+                  width: 160px;
+                  border-radius: 10px;
+                  margin: 2px auto;
+                }
+	            
+                .circle_bg_lightblue_rectangle {
+                  border: 1px solid lightblue;
+                  background-color: lightblue;
+                  border-radius: 10px;
+                  margin: 2px auto;
+                }
+	            
+                .circle_bg_yellow_rectangle {
+                  width: 160px;
+                  border: 1px solid rgb(241, 245, 9);
+                  background-color: rgb(241, 245, 9);
+                  border-radius: 10px;
+                  margin: 2px auto;
+                }
+	            
+                .circle_lightblue_rectangle {
+                  width: 160px;
+                  border: 1px solid lightblue;
+                  border-radius: 10px;
+                  margin: 2px auto;
+                  color: white;
+                }
+	            
+                .circle_orange_rectangle {
+                  border: 1px solid orange;
+                  border-radius: 10px;
+                  margin: 2px auto;
+                }
+	            
+                .circle_orangered_rectangle {
+                  border: 1px solid orangered;
+                  background-color: rgb(233, 99, 50);
+                  border-radius: 10px;
+                  margin: 2px auto;
+                }
             </style>
             </head>
             <body>
-            <center>
-            <table border="1" style="border-collapse:collapse; border:1px gray solid;">
+                <div class="jb_table">
+                    <div class="row">
             '''
             htmlTail='''
-            </table>
+                    </div>
+                </div>
             </body>
             </html>
             '''
             f = open(filePath,'w')
             f.write(htmlHead)
-            idx = 1
+            idx = 0
             colorTable = [ 0, 1, 0, 1, 
                            1, 0, 1, 0,
                            0, 1, 0, 1,
                            1, 0, 1, 0]
 
+            rowList = ["<span class='cell'>\n"] * 4
             for memo in memoData:
-                if idx % 4 == 1:
-                    f.write("<tr>\n")
-                bgcolor = ""
+
+                if colorTable[idx] == 0:
+                    bgcolor = "class='circle_orange_rectangle'"
+                else:
+                    bgcolor = "class='circle_lightblue_rectangle'"
                 postNoSpaceData = ("&nbsp;").join(memo.split(" "))
                 postData = ("<br>").join(postNoSpaceData.split("\n"))
    
-                if colorTable[idx-1] == 1:
-                    bgcolor = "bgcolor=#e6f2ff"
-                tmpHtml = "<td {0}>&nbsp;{1}&nbsp;</td>\n".format(bgcolor, postData)
+                tmpHtml = "<div {0}>&nbsp;{1}&nbsp;</div>\n".format(bgcolor, postData)
                 #print(tmpHtml)
-                f.write(tmpHtml)
-                if idx % 4 == 0:
-                    f.write("</tr>\n")
+                rowList[idx%4] += tmpHtml
                 idx += 1
+
+            for i in range(4):
+                rowList[i] += "</span>\n"
+
+            for i in range(4):
+                 f.write(rowList[i])
+
             f.write(htmlTail)
             f.close()
         except:
+            #traceback.print_exc()
             dlg = wx.MessageDialog(None, 'Exception happened during export to HTML!',
                      'ChoboMemo', wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()

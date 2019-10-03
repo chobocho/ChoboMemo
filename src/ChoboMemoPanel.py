@@ -93,7 +93,7 @@ class ChoboMemoPanel(wx.Panel):
         exportFilePath = ""
         dlg = wx.FileDialog(
             self, message="Save file as ...", defaultDir=os.getcwd(),
-            defaultFile="", wildcard="Txt files (*.txt)|*.txt|Html file (*.htm)|*.htm", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+            defaultFile="", wildcard="Html file (*.htm)|*.htm|Txt files (*.txt)|*.txt", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
             )
 
         if dlg.ShowModal() == wx.ID_OK:
