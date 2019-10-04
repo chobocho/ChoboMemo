@@ -6,23 +6,23 @@ from filedrop import *
 
 '''
 Start  : 2018.06.12
-Update : 2019.10.02
+Update : 2019.10.04
 '''
 
-SW_TITLE = "ChoboMemo V1105.SJ03a"
+SW_TITLE = "ChoboMemo V1105.SJ04a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
         super(ChoboMemoFrame, self).__init__(*args, **kw)
         self.Bind(wx.EVT_CLOSE, self.onCloseApp)
 
-        ctrl_S_Id = wx.ID_ANY
+        ctrl_S_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.onSave, id=ctrl_S_Id)
-        ctrl_P_Id = wx.ID_ANY
+        ctrl_P_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.onRunPaint, id=ctrl_P_Id)
-        ctrl_R_Id = wx.ID_ANY
+        ctrl_R_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.onRun, id=ctrl_R_Id)
-        ctrl_Q_Id = wx.ID_ANY
+        ctrl_Q_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.onClose, id=ctrl_Q_Id)
 
 
