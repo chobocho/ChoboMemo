@@ -115,7 +115,7 @@ class ChoboMemoPanel(wx.Panel):
         exportFilePath = ""
         dlg = wx.FileDialog(
             self, message="Save file as ...", defaultDir=os.getcwd(),
-            defaultFile="", wildcard="Html file (*.htm)|*.htm|Txt files (*.txt)|*.txt", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+            defaultFile="", wildcard="Html file (*.htm)|*.htm|Txt files (*.txt)|*.txt|Markdown files (*.md)|*.md", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
             )
 
         if dlg.ShowModal() == wx.ID_OK:
@@ -132,6 +132,8 @@ class ChoboMemoPanel(wx.Panel):
                 memoData.append(tmpData)
             if (exportFilePath[-4:].lower() == ".htm"):
                 self.fileManger.exportToHtml(exportFilePath, memoData)
+            elif (exportFilePath[-3:].lower() == ".md"):
+                self.fileManger.exportToTxtWithoutTag(exportFilePath, memoData)
             else:
                 self.fileManger.exportToTxt(exportFilePath, memoData)
 
