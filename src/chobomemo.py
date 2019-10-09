@@ -3,13 +3,14 @@ import ChoboMemoPanel
 import CommandInterpreter
 import sys
 from filedrop import *
+from chobomemomenu import *
 
 '''
 Start  : 2018.06.12
 Update : 2019.10.04
 '''
 
-SW_TITLE = "ChoboMemo V1105.SJ04a"
+SW_TITLE = "ChoboMemo V1105.SJ09a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
@@ -23,7 +24,7 @@ class ChoboMemoFrame(wx.Frame):
         ctrl_R_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.onRun, id=ctrl_R_Id)
         ctrl_Q_Id = wx.NewIdRef()
-        self.Bind(wx.EVT_MENU, self.onClose, id=ctrl_Q_Id)
+        self.Bind(wx.EVT_MENU, self.OnQuit, id=ctrl_Q_Id)
 
 
         accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CTRL,  ord('S'), ctrl_S_Id ),
@@ -43,6 +44,7 @@ class ChoboMemoFrame(wx.Frame):
 
         filedrop = FileDrop(self)
         self.SetDropTarget(filedrop)
+        self.menu = ChoboMemoMenu(self)
 
     def OnCallback(self, filelist):
         loadFile = filelist[0]
@@ -79,8 +81,13 @@ class ChoboMemoFrame(wx.Frame):
             ci = CommandInterpreter.CommandInterpreter()
             ci.run(command)
 
-    def onClose(self, event):
+    def OnQuit(self, event):
         self.Close()
+
+    def OnAbout(self, event):
+        msg = SW_TITLE + '\nhttp://chobocho.com'
+        title = 'About'
+        wx.MessageBox(msg, title, wx.OK | wx.ICON_INFORMATION)
 
     def onCloseApp(self, event):
         if event.CanVeto() and self.memoPanel.needSave():
