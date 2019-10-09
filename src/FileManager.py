@@ -226,3 +226,21 @@ class FileManager:
                                    'ChoboMemo', wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
+
+    def exportToTxtWithoutTag(self, filePath, memoData):
+        try:
+            f = open(filePath, 'w')
+            f.write(filePath+'\n\n')
+            idx = 0
+            for memo in memoData:
+                idx += 1
+                if len(memo) == 0:
+                    continue
+                tmpText = memo + "\n\n"
+                f.write(tmpText)
+            f.close()
+        except:
+            dlg = wx.MessageDialog(None, 'Exception happened during export to TXT!',
+                                   'ChoboMemo', wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()

@@ -52,6 +52,29 @@ class ChoboMemoPanel(wx.Panel):
             self.onSaveNewMemo()
         self.hash = self.getMemoHash()
 
+    def OnSaveAsTextWithoutTag(self):
+        print ("OnSaveAsTextWithoutTag")
+        exportFilePath = ""
+        dlg = wx.FileDialog(
+            self, message="Save file as ...", defaultDir=os.getcwd(),
+            defaultFile="", wildcard="Txt files (*.txt)|*.txt|Markdown files (*.md)|*.md", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+            )
+
+        if dlg.ShowModal() == wx.ID_OK:
+            exportFilePath = dlg.GetPath()
+        dlg.Destroy()
+
+        if len(exportFilePath) > 0:
+            print ("onExportMemo : " + exportFilePath)
+            memoData = []
+            for memo in self.memoCtrlList:
+                tmpData = memo.GetValue()
+                if len(tmpData) == 0:
+                    tmpData = ""
+                memoData.append(tmpData)
+            self.fileManger.exportToTxtWithoutTag(exportFilePath, memoData)
+
+
     def onSave(self, evt):
         print ("onSave")
         self.onSaveData()
@@ -77,7 +100,6 @@ class ChoboMemoPanel(wx.Panel):
                 memoData.append(tmpData)
             self.fileManger.onSave(saveFilePath, memoData)
             self.frame.SetTitle("# " + saveFilePath)
-
 
     def onSaveMemo(self, evt):
         print ("onSaveMemo")
