@@ -211,7 +211,7 @@ class FileManager:
 
     def exportToTxt(self, filePath, memoData):
         try:
-            f = open(filePath, 'w')
+            f = open(filePath, 'w', encoding="UTF-8")
             idx = 0
             for memo in memoData:
                 idx += 1
@@ -229,7 +229,7 @@ class FileManager:
 
     def exportToTxtWithoutTag(self, filePath, memoData):
         try:
-            f = open(filePath, 'w')
+            f = open(filePath, 'w', encoding="UTF-8")
             f.write(filePath+'\n\n')
             idx = 0
             for memo in memoData:
