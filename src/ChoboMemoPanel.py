@@ -165,13 +165,76 @@ class ChoboMemoPanel(wx.Panel):
     def needSave(self):
         return self.hash != self.getMemoHash()
 
+    def OnSearchKeyword(self, event):
+        print("OnSearchKeyword")
+
+        searchKeyword = self.searchKeywordText.GetValue()
+        if len(searchKeyword) == 0:
+            return
+
+        tmpSearchKeywordList = searchKeyword.split('|')
+        searchKeyList = []
+        for k in tmpSearchKeywordList:
+            if len(k) < 2:
+                continue
+            searchKeyList.append(k)
+
+        if len(searchKeyList) == 0:
+            return
+
+        for memo in self.memoCtrlList:
+            tmpData = memo.GetValue()
+            if len(tmpData) == 0:
+                continue
+            for k in searchKeyList:    
+                if k in tmpData:
+                    print(tmpData)
+                    memo.SetBackgroundColour(wx.Colour(255, 201, 33))
+                    memo.Refresh()
+                    break
+
+    def OnClearKeyword(self, event):
+        print("OnClearKeyword")
+        self.searchKeywordText.SetValue("")
+        self._InitMemoPanel()
+
+    def _InitMemoPanel(self):
+        colorTable = [ 0, 1, 0, 1, 
+                       1, 0, 1, 0,
+                       0, 1, 0, 1,
+                       1, 0, 1, 0]
+        idx = 0
+        for memo in self.memoCtrlList:
+            if colorTable[idx] == 1:
+                memo.SetBackgroundColour((240, 240, 240))
+            else:
+                memo.SetBackgroundColour((255, 255, 255))
+            idx += 1
+
     def drawUI(self):
         print ("ChoboMemoPanel::drawUI")
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        BOX_SIZE = 120
+        searchBox = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.searchKeywordText = wx.TextCtrl(self, style = wx.TE_PROCESS_ENTER, size=(580,30))
+        self.searchKeywordText.SetValue("")
+        self.searchKeywordText.Bind(wx.EVT_TEXT_ENTER, self.OnSearchKeyword)
+        searchBox.Add(self.searchKeywordText, 1, wx.EXPAND)
+
+        self.searchBtn = wx.Button(self, 10, "Search", size=(30,30))
+        self.searchBtn.Bind(wx.EVT_BUTTON, self.OnSearchKeyword)
+        searchBox.Add(self.searchBtn, 1, wx.EXPAND)
+
+        self.clearSearchBtn = wx.Button(self, 10, "Clear", size=(30,30))
+        self.clearSearchBtn.Bind(wx.EVT_BUTTON, self.OnClearKeyword)
+        searchBox.Add(self.clearSearchBtn, 1, wx.EXPAND)
+
+        sizer.Add(searchBox, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         ##
+        BOX_SIZE = 120
+
         memoMngBox1 = wx.BoxSizer(wx.HORIZONTAL)
 
         self.memoText1 = wx.TextCtrl(self, style = wx.TE_MULTILINE,size=(150,BOX_SIZE))
@@ -258,23 +321,28 @@ class ChoboMemoPanel(wx.Panel):
         ##
         memoMngBtnBox = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.LoadBtn = wx.Button(self, 10, "Load", size=(30,30))
+        loadBtnId = wx.NewId()
+        self.LoadBtn = wx.Button(self, loadBtnId, "Load", size=(30,30))
         self.LoadBtn.Bind(wx.EVT_BUTTON, self.onLoadMemo)
         memoMngBtnBox.Add(self.LoadBtn, 1, wx.EXPAND)
 
-        self.SaveBtn = wx.Button(self, 10, "Save", size=(30,30))
+        saveBtnId = wx.NewId()
+        self.SaveBtn = wx.Button(self, saveBtnId, "Save", size=(30,30))
         self.SaveBtn.Bind(wx.EVT_BUTTON, self.onSave)
         memoMngBtnBox.Add(self.SaveBtn, 1, wx.EXPAND)
 
-        self.SaveAsBtn = wx.Button(self, 10, "Save As", size=(30,30))
+        saveAsBtnId = wx.NewId()
+        self.SaveAsBtn = wx.Button(self, saveAsBtnId, "Save As", size=(30,30))
         self.SaveAsBtn.Bind(wx.EVT_BUTTON, self.onSaveMemo)
         memoMngBtnBox.Add(self.SaveAsBtn, 1, wx.EXPAND)
 
-        self.ExportBtn = wx.Button(self, 10, "Export", size=(30,30))
+        exportBtnId = wx.NewId()
+        self.ExportBtn = wx.Button(self, exportBtnId, "Export", size=(30,30))
         self.ExportBtn.Bind(wx.EVT_BUTTON, self.onExportMemo)
         memoMngBtnBox.Add(self.ExportBtn, 1, wx.EXPAND)
 
-        self.memoClearAllBtn = wx.Button(self, 10, "ClearAll", size=(30,30))
+        memoClearAllBtnId = wx.NewId()
+        self.memoClearAllBtn = wx.Button(self, memoClearAllBtnId, "ClearAll", size=(30,30))
         self.memoClearAllBtn.Bind(wx.EVT_BUTTON, self.onClearAll)
         memoMngBtnBox.Add(self.memoClearAllBtn, 1, wx.EXPAND)
 
@@ -301,12 +369,5 @@ class ChoboMemoPanel(wx.Panel):
         self.memoCtrlList.append(self.memoText15)
         self.memoCtrlList.append(self.memoText16)
         ##
-        colorTable = [ 0, 1, 0, 1, 
-                       1, 0, 1, 0,
-                       0, 1, 0, 1,
-                       1, 0, 1, 0]
-        idx = 0
-        for memo in self.memoCtrlList:
-            if colorTable[idx] == 1:
-                memo.SetBackgroundColour((240, 240, 240))
-            idx += 1
+
+        self._InitMemoPanel()

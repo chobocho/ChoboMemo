@@ -10,7 +10,7 @@ Start  : 2018.06.12
 Update : 2019.10.10
 '''
 
-SW_TITLE = "ChoboMemo V1105.SJ10b"
+SW_TITLE = "ChoboMemo V1105.SJ23a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
@@ -33,9 +33,8 @@ class ChoboMemoFrame(wx.Frame):
                                          (wx.ACCEL_CTRL,  ord('Q'), ctrl_Q_Id )])
         self.SetAcceleratorTable(accel_tbl)
 
-        self.memoPanel = ChoboMemoPanel.ChoboMemoPanel(self)
-
         sizer = wx.BoxSizer(wx.VERTICAL)
+        self.memoPanel = ChoboMemoPanel.ChoboMemoPanel(self)
         sizer.Add(self.memoPanel, 1, wx.EXPAND)
         self.SetSizer(sizer)
 
@@ -111,7 +110,7 @@ class ChoboMemoFrame(wx.Frame):
 
 def main(fileName = ""):
     app = wx.App()
-    frm = ChoboMemoFrame(fileName, None, title=SW_TITLE, size=(700, 570))
+    frm = ChoboMemoFrame(fileName, None, title=SW_TITLE, size=(700, 640))
     frm.Show()
     app.MainLoop()
 
