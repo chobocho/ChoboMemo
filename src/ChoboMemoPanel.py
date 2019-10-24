@@ -22,6 +22,7 @@ class ChoboMemoPanel(wx.Panel):
             i += 1
         self.frame.SetTitle("# " + fileName)
         self.hash = self.getMemoHash()
+        self._OnSearchKeyword()
 
     def onLoadMemo(self, evt):
         print ("onLoadMemo")
@@ -42,6 +43,7 @@ class ChoboMemoPanel(wx.Panel):
         dlg.Destroy()
         if len(path) > 0:
             self.onLoadMemoFromFile(path)
+            self._OnSearchKeyword()
 
     def onSaveData(self):
         print ("onSaveData")
@@ -73,7 +75,6 @@ class ChoboMemoPanel(wx.Panel):
                     tmpData = ""
                 memoData.append(tmpData)
             self.fileManger.exportToTxtWithoutTag(exportFilePath, memoData)
-
 
     def onSave(self, evt):
         print ("onSave")
@@ -167,6 +168,10 @@ class ChoboMemoPanel(wx.Panel):
 
     def OnSearchKeyword(self, event):
         print("OnSearchKeyword")
+        self._OnSearchKeyword()
+
+    def _OnSearchKeyword(self):
+        self._InitMemoPanel()
 
         searchKeyword = self.searchKeywordText.GetValue()
         if len(searchKeyword) == 0:
@@ -175,23 +180,28 @@ class ChoboMemoPanel(wx.Panel):
         tmpSearchKeywordList = searchKeyword.split('|')
         searchKeyList = []
         for k in tmpSearchKeywordList:
-            if len(k) < 2:
+            if len(k) == 0:
                 continue
-            searchKeyList.append(k)
+            searchKeyList.append(k.lower())
 
         if len(searchKeyList) == 0:
             return
 
+        colorList = [wx.Colour(225, 245, 254), wx.Colour(255, 248, 225), wx.Colour(255, 204, 188)]
+
         for memo in self.memoCtrlList:
-            tmpData = memo.GetValue()
-            if len(tmpData) == 0:
+            tmpPreData = memo.GetValue()
+            if len(tmpPreData) == 0:
                 continue
+            tmpData = tmpPreData.lower()
+            idx = 1
             for k in searchKeyList:    
                 if k in tmpData:
-                    print(tmpData)
-                    memo.SetBackgroundColour(wx.Colour(255, 201, 33))
+                    # print(tmpData)
+                    memo.SetBackgroundColour(colorList[idx%3])
                     memo.Refresh()
                     break
+                idx += 1
 
     def OnClearKeyword(self, event):
         print("OnClearKeyword")
@@ -209,28 +219,40 @@ class ChoboMemoPanel(wx.Panel):
                 memo.SetBackgroundColour((240, 240, 240))
             else:
                 memo.SetBackgroundColour((255, 255, 255))
+            memo.Refresh()
             idx += 1
+
+    def OnToggleSearchBox(self, flag):
+        if flag == True:
+            self.searchKeywordText.Show()
+            self.searchBtn.Show()
+            self.clearSearchBtn.Show()
+        else:
+            self.searchKeywordText.Hide()
+            self.searchBtn.Hide()
+            self.clearSearchBtn.Hide()
+        self.Layout()
 
     def drawUI(self):
         print ("ChoboMemoPanel::drawUI")
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        searchBox = wx.BoxSizer(wx.HORIZONTAL)
+        self.searchBox = wx.BoxSizer(wx.HORIZONTAL)
 
         self.searchKeywordText = wx.TextCtrl(self, style = wx.TE_PROCESS_ENTER, size=(580,30))
         self.searchKeywordText.SetValue("")
         self.searchKeywordText.Bind(wx.EVT_TEXT_ENTER, self.OnSearchKeyword)
-        searchBox.Add(self.searchKeywordText, 1, wx.EXPAND)
+        self.searchBox.Add(self.searchKeywordText, 1, wx.EXPAND)
 
         self.searchBtn = wx.Button(self, 10, "Search", size=(30,30))
         self.searchBtn.Bind(wx.EVT_BUTTON, self.OnSearchKeyword)
-        searchBox.Add(self.searchBtn, 1, wx.EXPAND)
+        self.searchBox.Add(self.searchBtn, 1, wx.EXPAND)
 
         self.clearSearchBtn = wx.Button(self, 10, "Clear", size=(30,30))
         self.clearSearchBtn.Bind(wx.EVT_BUTTON, self.OnClearKeyword)
-        searchBox.Add(self.clearSearchBtn, 1, wx.EXPAND)
+        self.searchBox.Add(self.clearSearchBtn, 1, wx.EXPAND)
 
-        sizer.Add(searchBox, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(self.searchBox, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         ##
         BOX_SIZE = 120

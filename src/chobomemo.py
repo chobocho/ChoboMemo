@@ -7,10 +7,10 @@ from chobomemomenu import *
 
 '''
 Start  : 2018.06.12
-Update : 2019.10.10
+Update : 2019.10.25
 '''
 
-SW_TITLE = "ChoboMemo V1105.SJ23a"
+SW_TITLE = "ChoboMemo V1105.SJ25a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
@@ -83,6 +83,14 @@ class ChoboMemoFrame(wx.Frame):
         if command != "-1":
             ci = CommandInterpreter.CommandInterpreter()
             ci.run(command)
+
+    def OnShowSearchMenu(self, event):
+        print("OnShowSearchMenu")
+        self.memoPanel.OnToggleSearchBox(True)
+
+    def OnHideSearchMenu(self, event):    
+        print("OnHideSearchMenu")
+        self.memoPanel.OnToggleSearchBox(False)
 
     def OnQuit(self, event):
         self.Close()
