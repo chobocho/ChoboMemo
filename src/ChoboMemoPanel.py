@@ -213,12 +213,14 @@ class ChoboMemoPanel(wx.Panel):
                        1, 0, 1, 0,
                        0, 1, 0, 1,
                        1, 0, 1, 0]
+        font = wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.NORMAL)
         idx = 0
         for memo in self.memoCtrlList:
             if colorTable[idx] == 1:
                 memo.SetBackgroundColour((240, 240, 240))
             else:
                 memo.SetBackgroundColour((255, 255, 255))
+            memo.SetFont(font)
             memo.Refresh()
             idx += 1
 
