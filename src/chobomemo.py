@@ -4,13 +4,12 @@ import CommandInterpreter
 import sys
 from filedrop import *
 from chobomemomenu import *
+from info import *
 
 '''
 Start  : 2018.06.12
 Update : 2019.10.25
 '''
-
-SW_TITLE = "ChoboMemo V1105.SJ25a"
 
 class ChoboMemoFrame(wx.Frame):
     def __init__(self, filename_, *args, **kw):
