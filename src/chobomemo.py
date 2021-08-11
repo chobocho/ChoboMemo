@@ -25,8 +25,15 @@ class ChoboMemoFrame(wx.Frame):
         ctrl_Q_Id = wx.NewIdRef()
         self.Bind(wx.EVT_MENU, self.OnQuit, id=ctrl_Q_Id)
 
+        self.menu = ChoboMemoMenu(self)
 
-        accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CTRL,  ord('S'), ctrl_S_Id ),
+        accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('1'), self.menu.one_tile_item_id),
+                                         (wx.ACCEL_CTRL, ord('2'), self.menu.two_tile_item_id),
+                                         (wx.ACCEL_CTRL, ord('4'), self.menu.four_tile_item_id),
+                                         (wx.ACCEL_CTRL, ord('9'), self.menu.nine_tile_item_id),
+                                         (wx.ACCEL_CTRL, ord('0'), self.menu.sixteen_tile_item_id),
+                                         (wx.ACCEL_CTRL, ord('S'), ctrl_S_Id),
+                                         (wx.ACCEL_CTRL,  ord('S'), ctrl_S_Id ),
                                          (wx.ACCEL_CTRL,  ord('P'), ctrl_P_Id ),
                                          (wx.ACCEL_CTRL,  ord('R'), ctrl_R_Id ),
                                          (wx.ACCEL_CTRL,  ord('Q'), ctrl_Q_Id )])
@@ -42,7 +49,6 @@ class ChoboMemoFrame(wx.Frame):
 
         filedrop = FileDrop(self)
         self.SetDropTarget(filedrop)
-        self.menu = ChoboMemoMenu(self)
 
     def OnCallback(self, filelist):
         loadFile = filelist[0]
@@ -95,7 +101,9 @@ class ChoboMemoFrame(wx.Frame):
         self.Close()
 
     def OnAbout(self, event):
-        msg = SW_TITLE + '\nhttp://chobocho.com'
+        msg = SW_TITLE \
+              + '\n\nCtrl+1\nCtrl+2\nCtrl+4\nCtrl+9\nCtrl+0\n\n' \
+              + '\nhttp://chobocho.com'
         title = 'About'
         wx.MessageBox(msg, title, wx.OK | wx.ICON_INFORMATION)
 
@@ -113,6 +121,21 @@ class ChoboMemoFrame(wx.Frame):
                dlg.ShowModal()
                dlg.Destroy()
         self.Destroy()
+
+    def on_show_1_tile(self, event):
+        self.memoPanel.on_update_tile(1)
+
+    def on_show_2_tile(self, event):
+        self.memoPanel.on_update_tile(2)
+
+    def on_show_4_tile(self, event):
+        self.memoPanel.on_update_tile(4)
+
+    def on_show_9_tile(self, event):
+        self.memoPanel.on_update_tile(9)
+
+    def on_show_16_tile(self, event):
+        self.memoPanel.on_update_tile(16)
 
 
 def main(fileName = ""):

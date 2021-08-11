@@ -236,7 +236,6 @@ class ChoboMemoPanel(wx.Panel):
         self.Layout()
 
     def drawUI(self):
-        print ("ChoboMemoPanel::drawUI")
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         self.searchBox = wx.BoxSizer(wx.HORIZONTAL)
@@ -254,7 +253,7 @@ class ChoboMemoPanel(wx.Panel):
         self.clearSearchBtn.Bind(wx.EVT_BUTTON, self.OnClearKeyword)
         self.searchBox.Add(self.clearSearchBtn, 1, wx.EXPAND)
 
-        sizer.Add(self.searchBox, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(self.searchBox, 0, wx.EXPAND, 5)
 
         ##
         BOX_SIZE = 120
@@ -370,7 +369,7 @@ class ChoboMemoPanel(wx.Panel):
         self.memoClearAllBtn.Bind(wx.EVT_BUTTON, self.onClearAll)
         memoMngBtnBox.Add(self.memoClearAllBtn, 1, wx.EXPAND)
 
-        sizer.Add(memoMngBtnBox, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(memoMngBtnBox, 0, wx.EXPAND, 5)
         
         ##
         self.SetSizer(sizer)
@@ -395,3 +394,25 @@ class ChoboMemoPanel(wx.Panel):
         ##
 
         self._InitMemoPanel()
+
+
+    def on_update_tile(self, count):
+        tile_pattern = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        if count == 2:
+            tile_pattern[1] = 1
+        elif count == 4:
+            tile_pattern = [1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        elif count == 9:
+            tile_pattern = [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0]
+        elif count == 16:
+            tile_pattern = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+        for i in range(len(tile_pattern)):
+            if tile_pattern[i] == 1:
+                self.memoCtrlList[i].Show()
+            else:
+                self.memoCtrlList[i].Hide()
+
+        self.Refresh()
+        self.Layout()

@@ -7,8 +7,12 @@ class SimpleGuiMenu():
 
     def _addMenubar(self):
         self.menubar = wx.MenuBar()
+
         self.fileMenu = wx.Menu()
         self.menubar.Append(self.fileMenu, '&File')
+
+        self.viewMenu = wx.Menu()
+        self.menubar.Append(self.viewMenu, '&View')
 
         helpMenu = wx.Menu()
         aboutItemId = wx.NewId()

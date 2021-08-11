@@ -21,3 +21,23 @@ class ChoboMemoMenu(SimpleGuiMenu):
 
         fileItem = self.fileMenu.Append(wx.ID_EXIT, 'Quit', 'Quit App')
         self.parent.Bind(wx.EVT_MENU, self.parent.OnQuit, fileItem)
+
+        self.one_tile_item_id = wx.NewId()
+        one_tile_item = self.viewMenu.Append(self.one_tile_item_id, '&One', 'Show one text')
+        self.parent.Bind(wx.EVT_MENU, self.parent.on_show_1_tile, one_tile_item)
+
+        self.two_tile_item_id = wx.NewId()
+        two_tile_item = self.viewMenu.Append(self.two_tile_item_id, '&Two', 'Show two text')
+        self.parent.Bind(wx.EVT_MENU, self.parent.on_show_2_tile, two_tile_item)
+
+        self.four_tile_item_id = wx.NewId()
+        four_tile_item = self.viewMenu.Append(self.four_tile_item_id, '&Four', 'Show four text')
+        self.parent.Bind(wx.EVT_MENU, self.parent.on_show_4_tile, four_tile_item)
+
+        self.nine_tile_item_id = wx.NewId()
+        nine_tile_item = self.viewMenu.Append(self.nine_tile_item_id, '&Nine', 'Show nine text')
+        self.parent.Bind(wx.EVT_MENU, self.parent.on_show_9_tile, nine_tile_item)
+
+        self.sixteen_tile_item_id = wx.NewId()
+        sixteen_tile_item = self.viewMenu.Append(self.sixteen_tile_item_id, '&Sixteen', 'Show All text')
+        self.parent.Bind(wx.EVT_MENU, self.parent.on_show_16_tile, sixteen_tile_item)
